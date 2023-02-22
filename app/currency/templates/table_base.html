@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Currency - {% block title %}{% endblock title %}</title>
+</head>
+
+<style type="text/css">
+   TABLE {border-collapse: collapse}                                /* одинарная линия рамки таблицы */
+   .col {width: 500px}                                              /* Ширина ячейки */
+   .text {text-align:  center}                                      /* Центровка текста в колонке */
+   td {padding: 5px}                                                /* Отступы */
+   th {background: Gainsboro; vertical-align: top; padding: 5px}    /* Отступы в шапке, центровка текста */
+</style>
+
+<body>
+{% include 'includes/navbar.html' %}
+<table cellspacing="5" border="1">
+
+{% block content %}
+{% endblock content %}
+
+</table>
+</body>
+</html>
