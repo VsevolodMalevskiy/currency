@@ -5,11 +5,12 @@
 {% endblock title %}
 
 {% block content %}
-    <a href="/rate/create">Create</a><br>
+    <a href="/rate/create/">Create</a><br>
     {% for rate in rates %}
         ID: {{ rate.id }}
         Buy: {{ rate.buy }}
         Sell: {{ rate.sell }}
-        <a href="/rate/update">Update</a><br>
+        <a href="/rate/update/{{ rate.id }}/">Update</a>
+        <br>
     {% endfor %}
 {% endblock content %}

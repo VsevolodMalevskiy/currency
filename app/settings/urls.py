@@ -24,10 +24,10 @@ from currency.views import (
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('rate/list', list_rates),
-    path('rate/list_7', list_rates_7),
-    path('rate/create', rates_create),
-    path('rate/update', rates_update),
-    path('contact_us/list', list_contact_us),
-    path('rm', request_methods)
+    path('rate/list/', list_rates),
+    path('rate/list_7/', list_rates_7),
+    path('rate/create/', rates_create),
+    path('rate/update/<int:pk>/', rates_update),
+    path('contact_us/list/', list_contact_us),
+    path('rm/', request_methods)
 ]

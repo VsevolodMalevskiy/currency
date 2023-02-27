@@ -1,4 +1,4 @@
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 
@@ -39,15 +39,20 @@ def rates_create(request):
     return render(request, 'rates_create.html', context)
 
 
-def rates_update(request):
+def rates_update(request, pk):
     global form
     if request.method == 'POST':
         form = RateForm(request.POST)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect('/rate/list')
+            return HttpResponseRedirect('/rate/list/')
     elif request.method == 'GET':
-        form = RateForm()
+        try:
+            rate = Rate.objects.get(id=pk)
+        except Rate.DoesNotExist:
+            raise Http404('Rate does not exist')
+
+        form = RateForm(instance=rate)
 
     context = {
         'form': form
