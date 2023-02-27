@@ -33,11 +33,26 @@ def rates_create(request):
     elif request.method == 'GET':
         form = RateForm()
 
-
     context = {
         'form': form
     }
     return render(request, 'rates_create.html', context)
+
+
+def rates_update(request):
+    global form
+    if request.method == 'POST':
+        form = RateForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/rate/list')
+    elif request.method == 'GET':
+        form = RateForm()
+
+    context = {
+        'form': form
+    }
+    return render(request, 'rates_update.html', context)
 
 
 def list_rates(request):
