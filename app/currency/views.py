@@ -1,5 +1,5 @@
 from django.http import HttpResponse, HttpResponseRedirect, Http404
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
 
 from currency.models import Rate, ContactUs
@@ -40,24 +40,37 @@ def rates_create(request):
 
 
 def rates_update(request, pk):
-    global form
+    rate = get_object_or_404(Rate, pk=pk)  # проверка на наличие id, если нет, ошибка 404
+
     if request.method == 'POST':
-        form = RateForm(request.POST)
+        form = RateForm(request.POST, instance=rate)  # Instance=rate не добавляет, а перезаписывает по id объект
         if form.is_valid():
             form.save()
             return HttpResponseRedirect('/rate/list/')
     elif request.method == 'GET':
-        try:
-            rate = Rate.objects.get(id=pk)
-        except Rate.DoesNotExist:
-            raise Http404('Rate does not exist')
+        # try:
+        #     rate = Rate.objects.get(id=pk)
+        # except Rate.DoesNotExist:
+        #     raise Http404('Rate does not exist')
 
         form = RateForm(instance=rate)
 
-    context = {
-        'form': form
-    }
-    return render(request, 'rates_update.html', context)
+        context = {
+            'form': form
+        }
+        return render(request, 'rates_update.html', context)
+
+
+def rates_delete(request, pk):
+    rate = get_object_or_404(Rate, pk=pk)  # проверка на наличие id, если нет, ошибка 404
+    if request.method == 'POST':
+        rate.delete()
+        return HttpResponseRedirect('/rate/list/')
+    elif request.method == 'GET':
+        context = {
+        'rate': rate
+        }
+        return render(request, 'rates_delete.html', context)
 
 
 def list_rates(request):

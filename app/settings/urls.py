@@ -18,7 +18,8 @@ from django.urls import path
 from currency.views import (
     list_rates, list_contact_us,
     rates_create, list_rates_7,
-    request_methods, rates_update
+    request_methods, rates_update,
+    rates_delete
 )
 
 
@@ -28,6 +29,7 @@ urlpatterns = [
     path('rate/list_7/', list_rates_7),
     path('rate/create/', rates_create),
     path('rate/update/<int:pk>/', rates_update),
+    path('rate/delete/<int:pk>/', rates_delete),
     path('contact_us/list/', list_contact_us),
     path('rm/', request_methods)
 ]
