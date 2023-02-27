@@ -100,6 +100,17 @@ def list_contact_us(request):
     return render(request, 'contactus_list.html', context)
 
 
+# GET (details)
+def rates_details(request, pk):
+    rate = get_object_or_404(Rate, pk=pk)
+
+    context = {
+        'rate': rate
+    }
+
+    return render(request, 'rates_details.html', context)
+
+
 @csrf_exempt
 def request_methods(request):
     '''
