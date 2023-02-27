@@ -3,6 +3,7 @@
 from django.shortcuts import render
 
 from currency.models import Rate, ContactUs
+from currency.forms import RateForm
 
 
 # def list_rates(request):
@@ -23,8 +24,10 @@ from currency.models import Rate, ContactUs
 #     return HttpResponse(str(result))
 
 def rates_create(request):
+    form = RateForm()
 
     context = {
+        'form': form
     }
     return render(request, 'rates_create.html', context)
 
