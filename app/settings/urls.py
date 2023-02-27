@@ -17,9 +17,9 @@ from django.contrib import admin
 from django.urls import path
 from currency.views import (
     list_rates, list_contact_us,
-    rates_create, list_rates_7
+    rates_create, list_rates_7,
+    request_methods,
 )
-
 
 
 urlpatterns = [
@@ -27,5 +27,6 @@ urlpatterns = [
     path('rate/list', list_rates),
     path('rate/list_7', list_rates_7),
     path('rate/create', rates_create),
-    path('contact_us/list', list_contact_us)
+    path('contact_us/list', list_contact_us),
+    path('rm', request_methods)
 ]

@@ -1,6 +1,8 @@
 # from django.shortcuts import render
-# from django.http import HttpResponse
+
+from django.http import HttpResponse
 from django.shortcuts import render
+from django.views.decorators.csrf import csrf_exempt
 
 from currency.models import Rate, ContactUs
 from currency.forms import RateForm
@@ -24,7 +26,13 @@ from currency.forms import RateForm
 #     return HttpResponse(str(result))
 
 def rates_create(request):
-    form = RateForm()
+    if request.GET:
+        form = RateForm(request.GET)
+        if form.is_valid():
+            form.save()
+    else:
+        form = RateForm()
+
 
     context = {
         'form': form
@@ -59,3 +67,30 @@ def list_contact_us(request):
     return render(request, 'contactus_list.html', context)
 
 
+@csrf_exempt
+def request_methods(request):
+    '''
+    1. GET - client wants to get data from server (read)
+    http:\\localhost:8000\path\?name=John&age=27
+    2. POST - client wants push data to server (create)
+    http:\\localhost:8000\path\
+    name=John&age=27
+    3. PUT - client wants update record on server (update) name=John&age=28
+    4. PATCH - client wants update record on server partially (partial update) name=John or age=27
+    5. DELETE - client wants to delete record on server (delete)
+    6. OPTIONS - client wants to know which methods are available
+    7. HEAD (GET) - client wants info about (without body)
+    HTML - GET, POST
+    C - POST
+    R - GET (list, details)
+    U - PUT\PATCH
+    D - DELETE
+    '''
+    global message
+    if request.method == 'GET':
+        message = 'GET method'
+    elif request.method == 'POST':
+        message = 'POST method'
+    else:
+        message = 'метод не задан'
+    return HttpResponse(message)
