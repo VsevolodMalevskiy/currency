@@ -1,4 +1,4 @@
-from django.http import HttpResponse, HttpResponseRedirect, Http404
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
 
@@ -68,7 +68,7 @@ def rates_delete(request, pk):
         return HttpResponseRedirect('/rate/list/')
     elif request.method == 'GET':
         context = {
-        'rate': rate
+            'rate': rate
         }
         return render(request, 'rates_delete.html', context)
 
@@ -113,23 +113,23 @@ def rates_details(request, pk):
 
 @csrf_exempt
 def request_methods(request):
-    '''
-    1. GET - client wants to get data from server (read)
-    http:\\localhost:8000\path\?name=John&age=27
-    2. POST - client wants push data to server (create)
-    http:\\localhost:8000\path\
-    name=John&age=27
-    3. PUT - client wants update record on server (update) name=John&age=28
-    4. PATCH - client wants update record on server partially (partial update) name=John or age=27
-    5. DELETE - client wants to delete record on server (delete)
-    6. OPTIONS - client wants to know which methods are available
-    7. HEAD (GET) - client wants info about (without body)
-    HTML - GET, POST
-    C - POST
-    R - GET (list, details)
-    U - PUT\PATCH
-    D - DELETE
-    '''
+    # '''
+    # 1. GET - client wants to get data from server (read)
+    # http:\\localhost:8000\path\?name=John&age=27
+    # 2. POST - client wants push data to server (create)
+    # http:\\localhost:8000\path\
+    # name=John&age=27
+    # 3. PUT - client wants update record on server (update) name=John&age=28
+    # 4. PATCH - client wants update record on server partially (partial update) name=John or age=27
+    # 5. DELETE - client wants to delete record on server (delete)
+    # 6. OPTIONS - client wants to know which methods are available
+    # 7. HEAD (GET) - client wants info about (without body)
+    # HTML - GET, POST
+    # C - POST
+    # R - GET (list, details)
+    # U - PUT\PATCH
+    # D - DELETE
+    # '''
     global message
     if request.method == 'GET':
         message = 'GET method'
