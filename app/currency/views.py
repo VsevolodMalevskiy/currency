@@ -1,6 +1,4 @@
-# from django.shortcuts import render
-
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 
@@ -26,11 +24,13 @@ from currency.forms import RateForm
 #     return HttpResponse(str(result))
 
 def rates_create(request):
-    if request.GET:
-        form = RateForm(request.GET)
+    global form
+    if request.method == 'POST':
+        form = RateForm(request.POST)
         if form.is_valid():
             form.save()
-    else:
+            return HttpResponseRedirect('/rate/list')
+    elif request.method == 'GET':
         form = RateForm()
 
 
@@ -91,6 +91,4 @@ def request_methods(request):
         message = 'GET method'
     elif request.method == 'POST':
         message = 'POST method'
-    else:
-        message = 'метод не задан'
     return HttpResponse(message)
