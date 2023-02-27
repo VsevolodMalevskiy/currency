@@ -22,7 +22,7 @@ from currency.views import (
     rates_delete, rates_details,
     list_source, source_create,
     source_update, source_delete,
-    source_details
+    source_details, source_table
 )
 
 
@@ -40,6 +40,7 @@ urlpatterns = [
     path('source/create/', source_create),
     path('source/details/<int:pk>/', source_details),
     path('source/update/<int:pk>/', source_update),
-    path('source/delete/<int:pk>/', source_delete)
+    path('source/delete/<int:pk>/', source_delete),
+    path('source/table/', source_table),
 
 ]

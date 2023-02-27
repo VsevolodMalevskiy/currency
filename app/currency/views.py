@@ -87,6 +87,15 @@ def source_details(request, pk):
     return render(request, 'sources_details.html', context)
 
 
+def source_table(request):
+    sources = Source.objects.all()
+
+    context = {
+        'sources': sources
+    }
+    return render(request, 'source_table.html', context)
+
+
 def rates_create(request):
     global form
     if request.method == 'POST':
