@@ -22,6 +22,12 @@ from currency.models import Rate, ContactUs
 #                       f'message: {contact_us.message}, <br>')
 #     return HttpResponse(str(result))
 
+def rates_create(request):
+
+    context = {
+    }
+    return render(request, 'rates_create.html', context)
+
 
 def list_rates(request):
     rates = Rate.objects.all()
@@ -32,6 +38,15 @@ def list_rates(request):
     return render(request, 'rates_list.html', context)
 
 
+def list_rates_7(request):
+    rates = Rate.objects.all()
+
+    context = {
+        'rates': rates
+    }
+    return render(request, 'rates_list_7.html', context)
+
+
 def list_contact_us(request):
     contactus = ContactUs.objects.all()
 
@@ -39,3 +54,5 @@ def list_contact_us(request):
         'contactus': contactus
     }
     return render(request, 'contactus_list.html', context)
+
+
