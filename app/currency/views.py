@@ -2,8 +2,8 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
 
-from currency.models import Rate, ContactUs
-from currency.forms import RateForm
+from currency.models import Rate, ContactUs, Source
+from currency.forms import RateForm, SourceForm
 
 
 # def list_rates(request):
@@ -22,6 +22,70 @@ from currency.forms import RateForm
 #         result.append(f'id: {contact_us.id}, email_from: {contact_us.email_from}, subject: {contact_us.subject}, '
 #                       f'message: {contact_us.message}, <br>')
 #     return HttpResponse(str(result))
+
+
+def list_source(request):
+    sources = Source.objects.all()
+
+    context = {
+        'sources': sources
+    }
+    return render(request, 'sources_list.html', context)
+
+
+def source_create(request):
+    global form
+    if request.method == 'POST':
+        form = SourceForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/source/list')
+    elif request.method == 'GET':
+        form = SourceForm()
+
+    context = {
+        'form': form
+    }
+    return render(request, 'sources_create.html', context)
+
+
+def source_update(request, pk):
+    source = get_object_or_404(Source, pk=pk)  # проверка на наличие id, если нет, ошибка 404
+
+    if request.method == 'POST':
+        form = SourceForm(request.POST, instance=source)  # Instance=rate не добавляет, а перезаписывает по id объект
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/source/list/')
+    elif request.method == 'GET':
+        form = SourceForm(instance=source)
+        context = {
+            'form': form
+        }
+        return render(request, 'sources_update.html', context)
+
+
+def source_delete(request, pk):
+    source = get_object_or_404(Source, pk=pk)  # проверка на наличие id, если нет, ошибка 404
+    if request.method == 'POST':
+        source.delete()
+        return HttpResponseRedirect('/source/list/')
+    elif request.method == 'GET':
+        context = {
+            'source': source
+        }
+        return render(request, 'sources_delete.html', context)
+
+
+def source_details(request, pk):
+    source = get_object_or_404(Source, pk=pk)
+
+    context = {
+        'source': source
+    }
+
+    return render(request, 'sources_details.html', context)
+
 
 def rates_create(request):
     global form
