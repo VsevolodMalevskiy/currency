@@ -15,11 +15,22 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from currency.views import list_rates, list_contact_us
+from currency.views import (
+    list_rates, list_contact_us,
+    rates_create, list_rates_7,
+    request_methods, rates_update,
+    rates_delete, rates_details
+)
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('rate/list', list_rates),
-    path('contact_us/list', list_contact_us)
+    path('rate/list/', list_rates),
+    path('rate/list_7/', list_rates_7),
+    path('rate/create/', rates_create),
+    path('rate/details/<int:pk>/', rates_details),
+    path('rate/update/<int:pk>/', rates_update),
+    path('rate/delete/<int:pk>/', rates_delete),
+    path('contact_us/list/', list_contact_us),
+    path('rm/', request_methods)
 ]
