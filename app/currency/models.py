@@ -18,4 +18,4 @@ class ContactUs(models.Model):
 class Source(models.Model):
     source_url = models.URLField(max_length=255)
     name = models.CharField(max_length=64)
-    phone = models.CharField(max_length=16, null=True)
+    phone = models.CharField(max_length=16, null=True, blank=True)
