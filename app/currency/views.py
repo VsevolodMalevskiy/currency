@@ -23,6 +23,9 @@ from currency.forms import RateForm, SourceForm
 #                       f'message: {contact_us.message}, <br>')
 #     return HttpResponse(str(result))
 
+def start_page(request):
+    return render(request, 'base.html')
+
 
 def list_source(request):
     sources = Source.objects.all()
@@ -50,6 +53,7 @@ def source_create(request):
 
 
 def source_update(request, pk):
+    global form
     source = get_object_or_404(Source, pk=pk)  # проверка на наличие id, если нет, ошибка 404
 
     if request.method == 'POST':
@@ -59,10 +63,10 @@ def source_update(request, pk):
             return HttpResponseRedirect('/source/list/')
     elif request.method == 'GET':
         form = SourceForm(instance=source)
-        context = {
-            'form': form
-        }
-        return render(request, 'sources_update.html', context)
+    context = {
+        'form': form
+    }
+    return render(request, 'sources_update.html', context)
 
 
 def source_delete(request, pk):
@@ -128,10 +132,10 @@ def rates_update(request, pk):
 
         form = RateForm(instance=rate)
 
-        context = {
-            'form': form
-        }
-        return render(request, 'rates_update.html', context)
+    context = {
+        'form': form
+    }
+    return render(request, 'rates_update.html', context)
 
 
 def rates_delete(request, pk):

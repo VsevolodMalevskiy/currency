@@ -22,11 +22,13 @@ from currency.views import (
     rates_delete, rates_details,
     list_source, source_create,
     source_update, source_delete,
-    source_details, source_table
+    source_details, source_table,
+    start_page
 )
 
 
 urlpatterns = [
+    path('', start_page),
     path('admin/', admin.site.urls),
     path('rate/list/', list_rates),
     path('rate/list_7/', list_rates_7),
