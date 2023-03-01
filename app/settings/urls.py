@@ -14,35 +14,15 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
-from currency.views import (
-    list_rates, list_contact_us,
-    rates_create, list_rates_7,
-    request_methods, rates_update,
-    rates_delete, rates_details,
-    list_source, source_create,
-    source_update, source_delete,
-    source_details, source_table,
-    start_page
-)
-
+from django.urls import path, include
+from django.views.generic import TemplateView
 
 urlpatterns = [
-    path('', start_page),
-    path('admin/', admin.site.urls),
-    path('rate/list/', list_rates),
-    path('rate/list_7/', list_rates_7),
-    path('rate/create/', rates_create),
-    path('rate/details/<int:pk>/', rates_details),
-    path('rate/update/<int:pk>/', rates_update),
-    path('rate/delete/<int:pk>/', rates_delete),
-    path('contact_us/list/', list_contact_us),
-    path('rm/', request_methods),
-    path('source/list/', list_source),
-    path('source/create/', source_create),
-    path('source/details/<int:pk>/', source_details),
-    path('source/update/<int:pk>/', source_update),
-    path('source/delete/<int:pk>/', source_delete),
-    path('source/table/', source_table),
 
+    path('admin/', admin.site.urls),
+
+    path('__debug__/', include('debug_toolbar.urls')),
+
+    path('', TemplateView.as_view(template_name='index.html')),
+    path('currency/', include('currency.urls'))
 ]
