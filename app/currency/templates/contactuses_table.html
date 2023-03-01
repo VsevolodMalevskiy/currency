@@ -1,0 +1,24 @@
+{% extends 'table_base.html' %}
+
+{% block title %}
+    ContactUses
+{% endblock title %}
+
+{% block content %}
+    <h2> Exchange source tables </h2>
+    <tr>
+        <th>ID</th>
+        <th>Email_from</th>
+        <th>Subject</th>
+        <th>Message</th>
+    </tr>
+
+    {% for contactus in object_list %}
+        <tr>
+            <td class="text">{{ contactus.id }}</td>
+            <td class="text">{{ contactus.email_from }} </td>
+            <td class="text">{{ contactus.subject }} </td>
+            <td class="col">{{ contactus.message }} </td>
+        </tr>
+    {% endfor %}
+{% endblock content %}

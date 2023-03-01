@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Contactuses
+{% endblock title %}
+
+{% block content %}
+    ID: {{ contactus.id  }}<br>
+    Email_from: {{ contactus.email_from }}<br>
+    Subject: {{ contactus.subject }}<br>
+    Message: {{ contactus.message }}<br>
+{% endblock content %}

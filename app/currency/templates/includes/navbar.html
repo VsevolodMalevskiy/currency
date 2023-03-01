@@ -1,7 +1,8 @@
 <p>
     <a href="{% url 'currency:rate-list' %}">Rates</a>
-    <a href="/source/table/">Source_table</a>
-    <a href="/rate/list/">List</a>
-    <a href="/rate/list_7/">Rates</a>
-    <a href="/contact_us/list/">Contact_Us</a>
+    <a href="{% url 'currency:source-list' %}">Sources</a>
+    <a href="{% url 'currency:contactus-list' %}">Contactuses</a>
+    <a href="{% url 'currency:rate-table' %}">Rates_table</a>
+    <a href="{% url 'currency:source-table' %}">Sources_table</a>
+    <a href="{% url 'currency:contactus-table' %}">Contactuses_table</a>
 </p>
