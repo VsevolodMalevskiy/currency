@@ -1,14 +1,16 @@
 {% extends 'base.html' %}
 
 {% block title %}
-    Delete Sourses
+    Update ContactUs
 {% endblock title %}
 
 {% block content %}
-    Do you really want to delete source with id {{ source.id }}
+    Update Contactus Form
+
     <form method="post">
         {% csrf_token %}
-        <button type="submit">Yes</button>
+        {{ form.as_p }}
+        <button type="submit">Submit</button>
     </form>
 
 {% endblock content %}

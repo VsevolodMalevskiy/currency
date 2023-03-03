@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
 
 {% block title %}
-    Delete Sourses
+    Delete Contactuses
 {% endblock title %}
 
 {% block content %}
-    Do you really want to delete source with id {{ source.id }}
+    Do you really want to delete contactus with id {{ contactus.id }}
     <form method="post">
         {% csrf_token %}
         <button type="submit">Yes</button>
