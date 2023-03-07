@@ -15,6 +15,9 @@ class Rate(models.Model):
     def __str__(self):
         return f'Currency: {self.get_currency_display()}, Buy: {self.buy}'
 
+    class Meta:
+        verbose_name_plural = 'Rate'   # наименование базы в панели Admin
+
 
 class ContactUs(models.Model):
     email_from = models.EmailField(max_length=60)
@@ -24,6 +27,9 @@ class ContactUs(models.Model):
     def __str__(self):
         return f'email: {self.email_from}, Subject: {self.subject}'
 
+    class Meta:
+        verbose_name_plural = 'ContactUs'   # наименование базы в панели Admin
+
 
 class Source(models.Model):
     source_url = models.URLField(max_length=255)
@@ -32,3 +38,6 @@ class Source(models.Model):
 
     def __str__(self):
         return f'name: {self.name}, Phone: {self.phone}'
+
+    class Meta:
+        verbose_name_plural = 'Source'   # наименование базы в панели Admin
