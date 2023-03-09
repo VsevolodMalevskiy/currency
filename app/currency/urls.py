@@ -19,6 +19,8 @@ from currency.views import (
     ContactUsDetailView,
     ContactUsUpdateView,
     ContactUsDeleteView,
+    RequestResponseLogListView,
+    RequestResponseLogTableView,
 )
 
 app_name = 'currency'
@@ -42,4 +44,6 @@ urlpatterns = [
     path('contactus/details/<int:pk>/', ContactUsDetailView.as_view(), name='contactus-details'),
     path('contactus/update/<int:pk>/', ContactUsUpdateView.as_view(), name='contactus-update'),
     path('contactus/delete/<int:pk>/', ContactUsDeleteView.as_view(), name='contactus-delete'),
+    path('log/table/', RequestResponseLogListView.as_view(), name='log-list'),
+    path('log/list/', RequestResponseLogTableView.as_view(), name='log-table'),
 ]

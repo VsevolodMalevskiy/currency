@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}
+   RequestResponseLog
+{% endblock title %}
+
+{% block content %}
+    {% for log in object_list %}
+        ID: {{ log.id }}
+        Path: {{ log.path }}
+        Method: {{ log.request_method }}
+        Time: {{ log.time }}
+        <br>
+    {% endfor %}
+{% endblock content %}

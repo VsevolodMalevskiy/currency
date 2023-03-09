@@ -1,4 +1,4 @@
-from currency.models import Rate, ContactUs, Source
+from currency.models import Rate, ContactUs, Source, RequestResponseLog
 from currency.forms import RateForm, SourceForm, ContactUsForm
 
 from django.urls import reverse_lazy
@@ -83,12 +83,6 @@ class ContactUsDetailView(DetailView):
     template_name = 'contactuses_details.html'
 
 
-class ContactUsCreateView(CreateView):
-    form_class = ContactUsForm
-    template_name = 'contactuses_create.html'
-    success_url = reverse_lazy('currency:contactus-list')
-
-
 class ContactUsUpdateView(UpdateView):
     form_class = ContactUsForm
     template_name = 'contactuses_update.html'
@@ -109,3 +103,57 @@ class ContactUsTableView(ListView):
 
 class IndexView(TemplateView):
     template_name = 'index.html'
+
+
+class RequestResponseLogListView(ListView):
+    template_name = 'log_list.html'
+    queryset = RequestResponseLog.objects.all()
+
+
+class RequestResponseLogTableView(ListView):
+    template_name = 'log_table.html'
+    queryset = RequestResponseLog.objects.all()
+
+
+# class ContactUsCreateView(CreateView):
+#     form_class = ContactUsForm
+#     template_name = 'contactuses_create.html'
+#     success_url = reverse_lazy('currency:contactus-list')
+
+
+class ContactUsCreateView(CreateView):
+    template_name = 'contactuses_create.html'
+    success_url = reverse_lazy('currency:contactus-list')
+    model = ContactUs
+    form_class = ContactUsForm
+    # fields = (
+    #     'name',
+    #     'email',
+    #     'subject',
+    #     'message'
+    # )
+
+    def _send_mail(self):
+        subject = 'User ContactUs'
+        sender = 'User@gmail.com'
+        recipient = 'support@rambler.ru'
+        message = f'''
+            Request from: {self.object.name}
+            Reply to email: {self.object.email}
+            Subject: {self.object.subject}
+            Body: {self.object.message}
+        '''
+
+        from django.core.mail import send_mail
+        send_mail(
+            subject,
+            message,
+            sender,
+            [recipient, sender],
+            fail_silently=False,
+        )
+
+    def form_valid(self, form):
+        redirect = super().form_valid(form)
+        self._send_mail()
+        return redirect

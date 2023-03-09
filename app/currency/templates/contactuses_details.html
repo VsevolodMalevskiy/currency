@@ -5,8 +5,10 @@
 {% endblock title %}
 
 {% block content %}
-    ID: {{ contactus.id  }}<br>
-    Email_from: {{ contactus.email_from }}<br>
+    ID: {{ contactus.id }}<br>
+    Created: {{ contactus.created }}<br>
+    Name: {{ contactus.name }}<br>
+    Email: {{ contactus.email }}<br>
     Subject: {{ contactus.subject }}<br>
     Message: {{ contactus.message }}<br>
 {% endblock content %}
