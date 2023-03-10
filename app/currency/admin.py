@@ -1,11 +1,13 @@
 from django.contrib import admin
-from currency.models import Rate, ContactUs, Source
+from currency.models import Rate, ContactUs, Source, RequestResponseLog
 
 
 @admin.register(ContactUs)
 class ContactusAdmin(admin.ModelAdmin):
     list_display = (
-        'email_from',
+        'created',
+        'name',
+        'email',
         'subject',
         'message'
     )
@@ -38,4 +40,13 @@ class RateAdmin(admin.ModelAdmin):
         'currency',
         'source',
         'created',
+    )
+
+
+@admin.register(RequestResponseLog)
+class RequestResponseLogAdmin(admin.ModelAdmin):
+    list_display = (
+        'path',
+        'request_method',
+        'time'
     )

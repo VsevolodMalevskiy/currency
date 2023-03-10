@@ -8,7 +8,9 @@
     <h2> Exchange source tables </h2>
     <tr>
         <th>ID</th>
-        <th>Email_from</th>
+        <th>Created</th>
+        <th>Name</th>
+        <th>Email</th>
         <th>Subject</th>
         <th>Message</th>
     </tr>
@@ -16,7 +18,9 @@
     {% for contactus in object_list %}
         <tr>
             <td class="text">{{ contactus.id }}</td>
-            <td class="text">{{ contactus.email_from }} </td>
+            <td>{{ contactus.created }}</td>
+            <td>{{ contactus.name }}</td>
+            <td class="text">{{ contactus.email }} </td>
             <td class="text">{{ contactus.subject }} </td>
             <td class="col">{{ contactus.message }} </td>
         </tr>

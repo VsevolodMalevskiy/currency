@@ -60,6 +60,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
+    'currency.middlewares.RequestResponseTimeMiddleware',
 ]
 
 ROOT_URLCONF = 'settings.urls'
@@ -135,6 +136,14 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'  # для оправки email в консоли
+
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_HOST = 'smtp.gmail.com'
+# EMAIL_USE_TLS = True
+# EMAIL_PORT = 587   # Порт 25, 465 или 587.
+# EMAIL_HOST_USER = '__________@gmail.com'
+# EMAIL_HOST_PASSWORD = '****************'
 
 if DEBUG:
     import socket  # only if you haven't already imported this

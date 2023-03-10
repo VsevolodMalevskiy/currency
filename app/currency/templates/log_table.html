@@ -1,0 +1,24 @@
+{% extends 'table_base.html' %}
+
+{% block title %}
+    RequestResponseLog
+{% endblock title %}
+
+{% block content %}
+    <h2> Exchange logs tables </h2>
+    <tr>
+        <th>ID</th>
+        <th>Path</th>
+        <th>Method</th>
+        <th>Time</th>
+    </tr>
+
+    {% for log in object_list %}
+        <tr>
+            <td class="text">{{ log.id }}</td>
+            <td>{{ log.path }}</td>
+            <td>{{ log.request_method }}</td>
+            <td>{{ log.time }} </td>
+        </tr>
+    {% endfor %}
+{% endblock content %}

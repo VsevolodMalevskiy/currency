@@ -20,7 +20,9 @@ class Rate(models.Model):
 
 
 class ContactUs(models.Model):
-    email_from = models.EmailField(max_length=60)
+    created = models.DateTimeField(auto_now_add=True)
+    name = models.CharField(max_length=128)
+    email = models.EmailField(max_length=60)
     subject = models.CharField(max_length=40)
     message = models.TextField()
 
@@ -41,3 +43,9 @@ class Source(models.Model):
 
     class Meta:
         verbose_name_plural = 'Source'   # наименование базы в панели Admin
+
+
+class RequestResponseLog (models.Model):
+    path = models.CharField(max_length=128)
+    request_method = models.CharField(max_length=10)
+    time = models.FloatField()
