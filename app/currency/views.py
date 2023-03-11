@@ -1,5 +1,7 @@
 from currency.models import Rate, ContactUs, Source, RequestResponseLog
 from currency.forms import RateForm, SourceForm, ContactUsForm
+from django.contrib.auth import get_user_model
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView, TemplateView
@@ -157,3 +159,18 @@ class ContactUsCreateView(CreateView):
         redirect = super().form_valid(form)
         self._send_mail()
         return redirect
+
+
+class ProfileView(LoginRequiredMixin, UpdateView):        # mixin для исключения доступа к профайлу по прямой ссылке
+    template_name = 'registration/profile.html'
+    success_url = reverse_lazy('index')
+    model = get_user_model()                     # Возвращает модель пользователя, которая сейчас используется
+    # queryset = get_user_model().objects.all()
+    fields = (
+        'first_name',
+        'last_name'
+    )
+
+    # при регистрации нескольких админов исключает возможность редактирования чужого профиля
+    def get_object(self, queryset=None):
+        return self.request.user

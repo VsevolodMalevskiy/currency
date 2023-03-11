@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 from pathlib import Path
 
+from django.urls import reverse_lazy
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -146,6 +148,10 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'  # для оп�
 # EMAIL_PORT = 587   # Порт 25, 465 или 587.
 # EMAIL_HOST_USER = '__________@gmail.com'
 # EMAIL_HOST_PASSWORD = '****************'
+
+LOGIN_REDIRECT_URL = reverse_lazy('index')
+LOGOUT_REDIRECT_URL = reverse_lazy('index')
+LOGIN_URL = reverse_lazy('login')
 
 if DEBUG:
     import socket  # only if you haven't already imported this
