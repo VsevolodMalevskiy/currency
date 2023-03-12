@@ -146,8 +146,9 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'  # для оп�
 # EMAIL_HOST = 'smtp.gmail.com'
 # EMAIL_USE_TLS = True
 # EMAIL_PORT = 587   # Порт 25, 465 или 587.
-# EMAIL_HOST_USER = '__________@gmail.com'
-# EMAIL_HOST_PASSWORD = '****************'
+# EMAIL_HOST_USER = '*************@gmail.com'
+# EMAIL_HOST_PASSWORD = '************'
+
 
 LOGIN_REDIRECT_URL = reverse_lazy('index')
 LOGOUT_REDIRECT_URL = reverse_lazy('index')
