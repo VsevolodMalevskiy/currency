@@ -1,17 +1,16 @@
 {% extends 'base.html' %}
 
 {% block title %}
-    Login
+    Register
 {% endblock title %}
 
 {% block content %}
-    Login
+    Register
 
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit">Login</button>
-        <button type="submit" formaction="{% url 'password_reset' %}">Reset password</button>
+        <button type="submit">Register</button>
     </form>
 
 {% endblock content %}
