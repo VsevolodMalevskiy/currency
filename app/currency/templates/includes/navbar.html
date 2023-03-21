@@ -11,13 +11,13 @@
     <a href="{% url 'currency:log-table' %}">Log_table</a><br><br>
 
     {% if request.user.is_authenticated %}
-        Welcome {{ request.user.username.title }}!<br><br>
+        Welcome {{ request.user.email }}!<br><br>
         <button type="submit" formaction="{% url 'profile' %}">Profile</button>
         <button type="submit" formaction="{% url 'logout' %}">Logout</button>
         <button type="submit" formaction="{% url 'password_change' %}">Password_change</button>
 
     {% else %}
-        <button type="submit">Sign Up</button>
+        <button type="submit" formaction="{% url 'account:signup' %}">Sign Up</button>
         <button type="submit" formaction="{% url 'login' %}">Login</button>
 <!--        <button type="submit" formaction="{% url 'register' %}">Register</button>-->
     {% endif %}
