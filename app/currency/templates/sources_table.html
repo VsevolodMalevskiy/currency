@@ -8,17 +8,13 @@
     <h2> Exchange source tables </h2>
     <tr>
         <th>ID</th>
-        <th>Source_url</th>
         <th>Name</th>
-        <th>Phone</th>
     </tr>
 
     {% for source in object_list %}
         <tr>
             <td class="text">{{ source.id }}</td>
-            <td class="text">{{ source.source_url}} </td>
             <td class="text">{{ source.name }} </td>
-            <td class="text">{{ source.phone }} </td>
         </tr>
     {% endfor %}
 {% endblock content %}

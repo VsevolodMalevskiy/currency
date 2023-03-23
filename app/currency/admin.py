@@ -25,9 +25,7 @@ class ContactusAdmin(admin.ModelAdmin):
 @admin.register(Source)
 class SourceAdmin(admin.ModelAdmin):
     list_display = (
-        'source_url',
         'name',
-        'phone'
     )
 
 

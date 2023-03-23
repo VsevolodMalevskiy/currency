@@ -19,9 +19,7 @@ class SourceForm(forms.ModelForm):
     class Meta:
         model = Source
         fields = (
-            'source_url',
             'name',
-            'phone'
         )
 
 
