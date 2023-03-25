@@ -26,7 +26,6 @@ class ContactUs(models.Model):
     subject = models.CharField(max_length=40)
     message = models.TextField()
 
-
     def __str__(self):
         return f'email: {self.email_from}, Subject: {self.subject}'
 
