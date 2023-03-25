@@ -49,3 +49,4 @@ class RequestResponseLog (models.Model):
     path = models.CharField(max_length=128)
     request_method = models.CharField(max_length=10)
     time = models.FloatField()
+#
