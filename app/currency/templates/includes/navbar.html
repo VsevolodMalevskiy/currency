@@ -12,7 +12,7 @@
 
     {% if request.user.is_authenticated %}
         Welcome {{ request.user.email }}!<br><br>
-        <button type="submit" formaction="{% url 'profile' %}">Profile</button>
+        <button type="submit" formaction="{% url 'account:profile' %}">Profile</button>
         <button type="submit" formaction="{% url 'logout' %}">Logout</button>
         <button type="submit" formaction="{% url 'password_change' %}">Password_change</button>
 

@@ -1,0 +1,6 @@
+
+# Ignores all files
+*
+
+# Except .gitignore
+!.gitignore
