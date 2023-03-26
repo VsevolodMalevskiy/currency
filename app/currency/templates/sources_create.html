@@ -1,15 +1,19 @@
 {% extends 'base.html' %}
+{% load crispy_forms_tags %}
 
 {% block title %}
     Create Sources
 {% endblock title %}
 
 {% block content %}
-    Create Source Form
+    Create Source Form <br>
+    Default logo:<br>
 
-    <form method="post">
+    <img src='/static/anonymous-bank.jpg' width="150" height="150">
+
+    <form method="post" enctype="multipart/form-data"> <!-- enctype= для работы с файлами -->
         {% csrf_token %}
-        {{ form.as_p }}
+        {{ form|crispy }}
         <button type="submit">Submit</button>
     </form>
 
