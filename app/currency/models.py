@@ -54,7 +54,7 @@ class Source(models.Model):
         if self.logo:
             return self.logo.url
 
-        return static('anonymous-bank.jpeg')
+        return static('anonymous-bank.jpg')
 
     def __str__(self):
         return self.name
