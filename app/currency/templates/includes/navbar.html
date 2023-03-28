@@ -1,15 +1,46 @@
-<form>
-<p>
-    <a href="{% url 'admin:index' %}">Admin</a>
-    <a href="{% url 'currency:rate-list' %}">Rates</a>
-    <a href="{% url 'currency:source-list' %}">Sources</a>
-    <a href="{% url 'currency:contactus-list' %}">Contactuses</a>
-    <a href="{% url 'currency:log-list' %}">Log</a>
-    <a href="{% url 'currency:rate-table' %}">Rates_table</a>
-    <a href="{% url 'currency:source-table' %}">Sources_table</a>
-    <a href="{% url 'currency:contactus-table' %}">Contactuses_table</a>
-    <a href="{% url 'currency:log-table' %}">Log_table</a><br><br>
 
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href=" {% url 'index' %}">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'admin:index' %}">Admin</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'currency:rate-list' %}">Rates</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'currency:source-list' %}">Sources</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'currency:contactus-list' %}">Contactuses</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'currency:log-list' %}">Log</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'currency:rate-table' %}">Rates_table</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'currency:source-table' %}">Sources_table</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'currency:contactus-table' %}">Contactuses_table</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'currency:log-table' %}">Log_table</a><br><br>
+        </li>
+      </ul>
+    </div>
+
+</nav>
+
+<form>
     {% if request.user.is_authenticated %}
         Welcome {{ request.user.email }}!<br><br>
         <button type="submit" formaction="{% url 'account:profile' %}">Profile</button>
@@ -19,7 +50,6 @@
     {% else %}
         <button type="submit" formaction="{% url 'account:signup' %}">Sign Up</button>
         <button type="submit" formaction="{% url 'login' %}">Login</button>
-<!--        <button type="submit" formaction="{% url 'register' %}">Register</button>-->
+        <button type="submit" formaction="{% url 'register' %}">Register</button>
     {% endif %}
-</p>
 </form>

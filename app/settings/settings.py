@@ -44,6 +44,8 @@ DJANGO_APPS = [
 EXTERNAL_APPS = [
     'django_extensions',
     'debug_toolbar',
+    'crispy_forms',
+    'crispy_bootstrap4'
 ]
 
 INTERNAL_APPS = [
@@ -53,6 +55,9 @@ INTERNAL_APPS = [
 
 INSTALLED_APPS = DJANGO_APPS + EXTERNAL_APPS + INTERNAL_APPS
 
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap4"
+
+CRISPY_TEMPLATE_PACK = "bootstrap4"
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

@@ -1,16 +1,32 @@
 {% extends 'base.html' %}
+{% load crispy_forms_tags %}
 
 {% block title %}
     Create Rates
 {% endblock title %}
 
 {% block content %}
-    Create Rate Form
+    Create Rate Form<br><br>
 
     <form method="post">
         {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Submit</button>
+        <div class="row">
+            <div class="col-6">
+                {{ form.buy|as_crispy_field }}
+            </div>
+            <div class="col-6">
+                {{ form.sell|as_crispy_field }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                {{ form.source|as_crispy_field }}
+            </div>
+            <div class="col-6">
+                {{ form.currency|as_crispy_field }}
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary mt-3">Submit</button>
     </form>
 
 {% endblock content %}

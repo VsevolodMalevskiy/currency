@@ -1,16 +1,26 @@
 {% extends 'base.html' %}
+{% load crispy_forms_tags %}
 
 {% block title %}
     Update ContactUs
 {% endblock title %}
 
 {% block content %}
-    Update Contactus Form
+    Update Contactus Form<br><br>
 
     <form method="post">
         {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Submit</button>
+        <div class="row">
+            <div class="col-6">
+                {{ form.name|as_crispy_field }}
+            </div>
+            <div class="col-6">
+                {{ form.subject|as_crispy_field }}
+            </div>
+        </div>
+        {{ form.email|as_crispy_field }}
+        {{ form.message|as_crispy_field }}
+        <button type="submit" class="btn btn-primary mt-3">Submit</button>
     </form>
 
 {% endblock content %}

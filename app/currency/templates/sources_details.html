@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 
+{% load static %}
+
 {% block title %}
     Sources
 {% endblock title %}
@@ -9,4 +11,5 @@
     Source_url: {{ source.source_url }}<br>
     Name: {{ source.name }}<br>
     Phone: {{ source.phone }}<br>
+    Logo:<br> <img src="{{ object.logo_url }}" width="150" height="150">
 {% endblock content %}

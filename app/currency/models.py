@@ -1,5 +1,6 @@
 from django.db import models
 from currency.choices import RateCurrencyChoices
+from django.templatetags.static import static
 
 
 class Rate(models.Model):
@@ -33,10 +34,27 @@ class ContactUs(models.Model):
         verbose_name_plural = 'ContactUs'   # наименование базы в панели Admin
 
 
+def logo_path(instance, filename):
+    return f"logos/{instance.id}/{filename}"  # avatar сохрянется в дирректории static\logo\id
+
+
 class Source(models.Model):
     source_url = models.URLField(max_length=255)
     name = models.CharField(max_length=64)
     phone = models.CharField(max_length=16, null=True, blank=True)
+    logo = models.FileField(
+        default=None,
+        null=True,
+        blank=True,
+        upload_to=logo_path
+    )
+
+    @property  # проверка наличия фото, при отсутствии вставка анонимного логотипа (*.html)
+    def logo_url(self):
+        if self.logo:
+            return self.logo.url
+
+        return static('anonymous-bank.jpg')
 
     def __str__(self):
         return self.name

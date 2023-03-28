@@ -21,7 +21,8 @@ class SourceForm(forms.ModelForm):
         fields = (
             'source_url',
             'name',
-            'phone'
+            'phone',
+            'logo'
         )
 
 
