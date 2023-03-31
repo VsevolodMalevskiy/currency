@@ -142,23 +142,28 @@ class ContactUsCreateView(CreateView):
 
     def _send_mail(self):
         subject = 'User ContactUs'
-        sender = 'User@gmail.com'
-        recipient = 'support@rambler.ru'
+        # sender = 'User@gmail.com'
+        # recipient = 'support@rambler.ru'
         message = f'''
             Request from: {self.object.name}
             Reply to email: {self.object.email}
             Subject: {self.object.subject}
             Body: {self.object.message}
         '''
-
-        from django.core.mail import send_mail
-        send_mail(
-            subject,
-            message,
-            sender,
-            [recipient, sender],
-            fail_silently=False,
-        )
+        from currency.tasks import send_mail
+        send_mail.delay(subject, message)  # delay - передача worker
+        # send_mail.apply_async(args=[subject, message]) # алтернатива верхему методу
+        '''
+        0 - 8.59 | 9.00 - 19.00 | 19.01 23.59
+           9.00  |    send      | 9.00 next day
+        '''
+        #  алтернативный метод - отправка в указанное время
+        # from datetime import datetime, timedelta
+        # send_mail.apply_async(
+        #     kwargs={'subject': subject, 'message': message},
+        #     # countdown=20   #  альтернатива sleep(20)
+        #     # eta=datetime(2023, 3, 28, 20, 49, 0)
+        # )
 
     def form_valid(self, form):
         redirect = super().form_valid(form)
