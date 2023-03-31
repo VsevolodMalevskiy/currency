@@ -174,6 +174,21 @@ if DEBUG:
 HOST = 'localhost:8000'
 HTTP_SCHEMA = 'http'
 
+
+# REDIS_HOST = 'localhost'
+# REDIS_PORT = '6379'
+#
+#
+# CELERY_BROKER_URL = "redis://localhost:6379"
+# # # CELERY
+CELERY_BROKER_URL = 'amqp://localhost'
+# '''
+# протокол общения с брокером:  amqp,
+# месторасположения сервера:    localhost,
+# порт по умолчанию:            5672,
+# логин, пароль:                guest, guest
+# '''
+
 # DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'  # для django-storages
 # AWS_ACCESS_KEY = ''
 # AWS_SECRET_ACCESS_KEY = ''
