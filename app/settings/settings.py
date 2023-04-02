@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 from pathlib import Path
 
+from celery.schedules import crontab
 from django.urls import reverse_lazy
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -174,20 +175,38 @@ if DEBUG:
 HOST = 'localhost:8000'
 HTTP_SCHEMA = 'http'
 
+# CELERY
 
 # REDIS_HOST = 'localhost'
 # REDIS_PORT = '6379'
-#
-#
+
 # CELERY_BROKER_URL = "redis://localhost:6379"
-# # # CELERY
+
 CELERY_BROKER_URL = 'amqp://localhost'
+
 # '''
 # протокол общения с брокером:  amqp,
 # месторасположения сервера:    localhost,
 # порт по умолчанию:            5672,
 # логин, пароль:                guest, guest
 # '''
+
+# планировщик задач
+CELERY_BEAT_SCHEDULE = {
+    'monobank': {
+        'task': 'currency.tasks.parse_privatbank',      # задача к выполнению def parse_monobank
+        'schedule': crontab(minute='*/15')               # каждые 15 минут
+    },
+    'privatbank': {
+        'task': 'currency.tasks.parse_monobank',
+        'schedule': crontab(minute='*/15')
+    },
+    'creditdneprbank': {
+        'task': 'currency.tasks.parse_creditdneprbank',
+        'schedule': crontab(minute='*/15')
+    }
+}
+
 
 # DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'  # для django-storages
 # AWS_ACCESS_KEY = ''
