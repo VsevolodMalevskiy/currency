@@ -32,7 +32,7 @@ def parse_creditdneprbank():
     for rate in rates:
         buy = to_2_places_decimal(rate[7:12])  # округление до 2 знаков после запятой для сравнения с данными в БД
         sale = to_2_places_decimal(rate[12:])
-        currency = rate[0:3]
+        currency = rate[:3]
 
         last_rate = Rate.objects.filter(
             currency=available_currency[currency],
