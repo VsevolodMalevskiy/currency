@@ -12,9 +12,12 @@ from bs4 import BeautifulSoup
 def parse_creditdneprbank():
     from currency.models import Rate, Source
 
-    source = Source.objects.filter(code_name=CREDITDNEPRBANK_CODE_NAME).first()
-    if source is None:
-        source = Source.objects.create(code_name=CREDITDNEPRBANK_CODE_NAME, name='CreditdneprBank')
+    source, _ = Source.objects.get_or_create(
+        code_name=CREDITDNEPRBANK_CODE_NAME,
+        defaults={
+            'name': 'CreditdneprBank',
+        }
+    )
 
     url = "https://creditdnepr.com.ua/currency"
     response = requests.get(url)
@@ -53,9 +56,12 @@ def parse_creditdneprbank():
 def parse_monobank():
     from currency.models import Rate, Source
 
-    source = Source.objects.filter(code_name=MONOBANK_CODE_NAME).first()
-    if source is None:
-        source = Source.objects.create(code_name=MONOBANK_CODE_NAME, name='MonoBank')
+    source, _ = Source.objects.get_or_create(
+        code_name=MONOBANK_CODE_NAME,
+        defaults={
+            'name': 'MonoBank',
+        }
+    )
 
     url = "https://api.monobank.ua/bank/currency"
     response = requests.get(url)
@@ -94,9 +100,16 @@ def parse_monobank():
 def parse_privatbank():
     from currency.models import Rate, Source
 
-    source = Source.objects.filter(code_name=PRIVATBANK_CODE_NAME).first()
-    if source is None:
-        source = Source.objects.create(code_name=PRIVATBANK_CODE_NAME, name='PrivatBank')
+    # source = Source.objects.filter(code_name=PRIVATBANK_CODE_NAME).first()
+    # if source is None:
+    #     source = Source.objects.create(code_name=PRIVATBANK_CODE_NAME, name='PrivatBank')
+    # аналог
+    source, _ = Source.objects.get_or_create(   # возвращает кортеж
+        code_name=PRIVATBANK_CODE_NAME,
+        defaults={
+            'name': 'PrivatBank',
+        }
+    )
 
     url = "https://api.privatbank.ua/p24api/pubinfo?exchange&json&coursid=11"
     response = requests.get(url)
