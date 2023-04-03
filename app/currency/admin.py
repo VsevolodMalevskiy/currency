@@ -36,7 +36,7 @@ class RateAdmin(admin.ModelAdmin):
     list_display = (
         'id',
         'buy',
-        'sell',
+        'sale',
         'currency',
         'source',
         'created',

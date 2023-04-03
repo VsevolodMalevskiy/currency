@@ -10,14 +10,15 @@ class Rate(models.Model):
         default=RateCurrencyChoices.USD
     )
     buy = models.DecimalField(max_digits=6, decimal_places=2)
-    sell = models.DecimalField(max_digits=6, decimal_places=2)
+    sale = models.DecimalField(max_digits=6, decimal_places=2)
     source = models.ForeignKey('currency.Source', on_delete=models.CASCADE)
+
+    class Meta:
+        ordering = ('-created', )  # направление сортировки
+        verbose_name_plural = 'Rate'  # наименование базы в панели Admin
 
     def __str__(self):
         return f'Currency: {self.get_currency_display()}, Buy: {self.buy}'
-
-    class Meta:
-        verbose_name_plural = 'Rate'   # наименование базы в панели Admin
 
 
 class ContactUs(models.Model):
@@ -41,6 +42,7 @@ def logo_path(instance, filename):
 class Source(models.Model):
     source_url = models.URLField(max_length=255)
     name = models.CharField(max_length=64)
+    code_name = models.CharField(max_length=64, unique=True)
     phone = models.CharField(max_length=16, null=True, blank=True)
     logo = models.FileField(
         default=None,
