@@ -43,7 +43,7 @@ def parse_creditdneprbank():
         ) \
             .order_by('-created') \
             .first()
-        if not last_rate or (last_rate.buy != buy and last_rate.sale != sale):
+        if not last_rate or last_rate.buy != buy or last_rate.sale != sale:
             Rate.objects.create(
                 buy=buy,
                 sale=sale,
@@ -87,7 +87,7 @@ def parse_monobank():
         ) \
             .order_by('-created') \
             .first()
-        if not last_rate or (last_rate.buy != buy and last_rate.sale != sale):
+        if not last_rate or last_rate.buy != buy or last_rate.sale != sale:
             Rate.objects.create(
                 buy=buy,
                 sale=sale,
@@ -134,7 +134,7 @@ def parse_privatbank():
         ) \
             .order_by('-created') \
             .first()
-        if not last_rate or (last_rate.buy != buy and last_rate.sale != sale):
+        if not last_rate or last_rate.buy != buy or last_rate.sale != sale:
             Rate.objects.create(
                 buy=buy,
                 sale=sale,
