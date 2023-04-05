@@ -4,11 +4,24 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView, TemplateView
+from django_filters.views import FilterView
+
+from currency.filters import RateFilter
 
 
-class RateListView(ListView):
+class RateListView(FilterView):
     template_name = 'rates_list.html'
     queryset = Rate.objects.all().select_related('source')  # join..("currency_rate"."source_id"="currency_source"."id")
+    paginate_by = 10  # количество записей на странице (пагинация)
+    filterset_class = RateFilter  # добавление класса фильтра
+
+    # Фмльтр работает при переходе на другую страницу
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['filter_pagination'] = '&'.join(
+            f'{key}={value}' for key, value in self.request.GET.items() if key != 'page'
+        )        # при переходе по страницам исключает повтор  в url (page=..&page=..&buy=..&sale=)
+        return context
 
 
 class RateDetailView(LoginRequiredMixin, DetailView):

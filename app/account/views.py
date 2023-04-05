@@ -36,7 +36,9 @@ class ProfileView(LoginRequiredMixin, UpdateView):        # mixin для иск�
     fields = (
         'first_name',
         'last_name',
-        'avatar'
+        'avatar',
+        'email',
+        'phone'
     )
 
     # при регистрации нескольких админов исключает возможность редактирования чужого профиля
