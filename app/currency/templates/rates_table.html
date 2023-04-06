@@ -5,6 +5,11 @@
 {% endblock title %}
 
 {% block content %}
+     <form method="get">
+        {{ filter.form.as_p }}
+        <input type="submit" />
+    </form>
+    <br>
     <h2> Exchange rates tables </h2>
     <tr>
         <th>ID</th>
@@ -15,7 +20,7 @@
         <th>Source</th>
     </tr>
 
-    {% for rate in object_list %}
+    {% for rate in page_obj %}
         <tr>
             <td class="text">{{ rate.id }}</td>
             <td>{{ rate.created }} </td>
@@ -25,4 +30,9 @@
             <td>{{ rate.source }}</td>
         </tr>
     {% endfor %}
+
+
+
 {% endblock content %}
+
+

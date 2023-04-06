@@ -8,6 +8,11 @@
 {% block content %}
 
     <a href="{% url 'currency:source-create' %}">Create</a><br>
+     <form method="get">
+        {{ filter.form.as_p }}
+        <input type="submit" />
+    </form>
+    <br>
     <div class="row col-12">
         <table class="table table-striped">
             <thead>
@@ -20,7 +25,7 @@
             </tr>
             </thead>
             <tbody>
-            {% for source in object_list %}
+            {% for source in page_obj %}
                 <tr>
                     <th scope="row">{{ forloop.counter }}</th>
                     <td>{{ source.id }}</td>
@@ -44,4 +49,7 @@
             </tbody>
         </table>
     </div>
+
+{% include 'includes/pagination.html' %}
+
 {% endblock content %}

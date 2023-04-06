@@ -7,3 +7,4 @@ class AccountConfig(AppConfig):
 
     def ready(self):
         import account.receivers
+        account.receivers.User
