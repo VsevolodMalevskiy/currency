@@ -3,10 +3,10 @@ from currency.forms import RateForm, SourceForm, ContactUsForm, RegisterUserForm
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
 from django.urls import reverse_lazy
-from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView, TemplateView
+from django.views.generic import CreateView, DetailView, UpdateView, DeleteView, TemplateView
 from django_filters.views import FilterView
 
-from currency.filters import RateFilter
+from currency.filters import RateFilter, ContactUsFilter, SourceFilter, RequestResponseLogFilter
 
 
 class RateListView(FilterView):
@@ -54,14 +54,32 @@ class RateDeleteView(UserPassesTestMixin, DeleteView):
         return self.request.user.is_superuser
 
 
-class RateTableView(ListView):
+class RateTableView(FilterView):
     template_name = 'rates_table.html'
     queryset = Rate.objects.all()
+    paginate_by = 10
+    filterset_class = RateFilter
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['filter_pagination'] = '&'.join(
+            f'{key}={value}' for key, value in self.request.GET.items() if key != 'page'
+        )
+        return context
 
 
-class SourceListView(ListView):
+class SourceListView(FilterView):
     template_name = 'sources_list.html'
     queryset = Source.objects.all()
+    paginate_by = 10
+    filterset_class = SourceFilter
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['filter_pagination'] = '&'.join(
+            f'{key}={value}' for key, value in self.request.GET.items() if key != 'page'
+        )
+        return context
 
 
 class SourceDetailView(DetailView):
@@ -88,14 +106,32 @@ class SourceDeleteView(DeleteView):
     success_url = reverse_lazy('currency:source-list')
 
 
-class SourceTableView(ListView):
+class SourceTableView(FilterView):
     template_name = 'sources_table.html'
     queryset = Source.objects.all()
+    paginate_by = 10
+    filterset_class = SourceFilter
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['filter_pagination'] = '&'.join(
+            f'{key}={value}' for key, value in self.request.GET.items() if key != 'page'
+        )
+        return context
 
 
-class ContactUsListView(ListView):
+class ContactUsListView(FilterView):
     template_name = 'contactuses_list.html'
     queryset = ContactUs.objects.all()
+    paginate_by = 10
+    filterset_class = ContactUsFilter
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['filter_pagination'] = '&'.join(
+            f'{key}={value}' for key, value in self.request.GET.items() if key != 'page'
+        )
+        return context
 
 
 class ContactUsDetailView(DetailView):
@@ -116,23 +152,50 @@ class ContactUsDeleteView(DeleteView):
     success_url = reverse_lazy('currency:contactus-list')
 
 
-class ContactUsTableView(ListView):
+class ContactUsTableView(FilterView):
     template_name = 'contactuses_table.html'
     queryset = ContactUs.objects.all()
+    paginate_by = 10
+    filterset_class = ContactUsFilter
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['filter_pagination'] = '&'.join(
+            f'{key}={value}' for key, value in self.request.GET.items() if key != 'page'
+        )
+        return context
 
 
 class IndexView(TemplateView):
     template_name = 'index.html'
 
 
-class RequestResponseLogListView(ListView):
+class RequestResponseLogListView(FilterView):
     template_name = 'log_list.html'
     queryset = RequestResponseLog.objects.all()
+    paginate_by = 10
+    filterset_class = RequestResponseLogFilter
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['filter_pagination'] = '&'.join(
+            f'{key}={value}' for key, value in self.request.GET.items() if key != 'page'
+        )
+        return context
 
 
-class RequestResponseLogTableView(ListView):
+class RequestResponseLogTableView(FilterView):
     template_name = 'log_table.html'
     queryset = RequestResponseLog.objects.all()
+    paginate_by = 10
+    filterset_class = RequestResponseLogFilter
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['filter_pagination'] = '&'.join(
+            f'{key}={value}' for key, value in self.request.GET.items() if key != 'page'
+        )
+        return context
 
 
 # class ContactUsCreateView(CreateView):

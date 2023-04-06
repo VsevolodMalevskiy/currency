@@ -5,6 +5,11 @@
 {% endblock title %}
 
 {% block content %}
+     <form method="get">
+        {{ filter.form.as_p }}
+        <input type="submit" />
+    </form>
+    <br>
     <h2> Exchange source tables </h2>
     <tr>
         <th>ID</th>
@@ -13,7 +18,7 @@
         <th>Phone</th>
     </tr>
 
-    {% for source in object_list %}
+    {% for source in page_obj %}
         <tr>
             <td class="text">{{ source.id }}</td>
             <td class="text">{{ source.source_url}} </td>

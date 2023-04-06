@@ -6,7 +6,12 @@
 
 {% block content %}
     <a href="{% url 'currency:contactus-create' %}">Create</a><br>
-    {% for contactus in object_list %}
+     <form method="get">
+        {{ filter.form.as_p }}
+        <input type="submit" />
+    </form>
+    <br>
+    {% for contactus in page_obj %}
         ID: {{ contactus.id }}
         Name: {{ contactus.name }}
         Email: {{ contactus.email }}
@@ -16,4 +21,7 @@
         <a href="{% url 'currency:contactus-details' contactus.id %}">Details</a>
         <br>
     {% endfor %}
+
+{% include 'includes/pagination.html' %}
+
 {% endblock content %}
