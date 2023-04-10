@@ -17,6 +17,7 @@ urlpatterns = [
 
     path('', IndexView.as_view(), name='index'),
     path('currency/', include('currency.urls')),
+    path('api/currency/', include('currency.api.urls')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)  # для перехода по ссылке в профиле к файлу
