@@ -10,12 +10,12 @@ from rest_framework_yaml.renderers import YAMLRenderer
 
 from django_filters import rest_framework as filters
 from rest_framework import filters as rest_framework_filters
-from currency.filters import RateAPIFilter, SourceAPIFilter
+from currency.filters import RateAPIFilter, SourceAPIFilter, ContactusAPIFilter
 
-from currency.api.serializers import RateSerializer, SourceSerializer
-from currency.models import Rate, Source
+from currency.api.serializers import RateSerializer, SourceSerializer, ContactusSerializer
+from currency.models import Rate, Source, ContactUs
 
-from currency.paginators import RatesPagination, SourcesPagination
+from currency.paginators import RatesPagination, SourcesPagination, ContactusesPagination
 from currency.throttlers import AnonCurrencyThrottle
 
 
@@ -31,6 +31,20 @@ class SourceViewSet(viewsets.ModelViewSet):
     )
     filterset_class = SourceAPIFilter
     ordering_fields = ('name', 'code_name')
+
+
+class ContactusViewSet(viewsets.ModelViewSet):
+    queryset = ContactUs.objects.all()
+    serializer_class = ContactusSerializer
+    renderer_classes = (JSONRenderer, XMLRenderer, YAMLRenderer)
+    pagination_class = ContactusesPagination
+    permission_classes = (AllowAny,)
+    filter_backends = (
+        filters.DjangoFilterBackend,
+        rest_framework_filters.OrderingFilter,
+    )
+    filterset_class = ContactusAPIFilter
+    ordering_fields = ('id', 'created', 'name', 'subject', 'email')
 
 
 # class RateApiView(generics.ListCreateAPIView):  # ListCreateAPIView включает в себя create,list

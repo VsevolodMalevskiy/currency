@@ -27,6 +27,16 @@ class ContactUsFilter(django_filters.FilterSet):
         fields = ['name', ]
 
 
+class ContactusAPIFilter(django_filters.FilterSet):
+
+    class Meta:
+        model = ContactUs
+        fields = {
+            'name': ('iendswith', 'istartswith', 'iexact', 'icontains'),
+            'subject': ('iendswith', 'istartswith', 'iexact', 'icontains'),
+        }
+
+
 class SourceFilter(django_filters.FilterSet):
 
     class Meta:
