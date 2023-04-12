@@ -2,13 +2,14 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, RedirectView, UpdateView
+from account.forms import RegisterUserForm
 
 from account.forms import UserSignUpForm
 
 
 class UserSignUpView(CreateView):
     queryset = get_user_model().objects.all()   # из setting.py параметр AUTH_USER_MODEL = 'account.User'
-    # queryset = User.objects.all()               то же самое
+    # queryset = User.objects.all()             # то же самое
     template_name = 'signup.html'
     success_url = reverse_lazy('index')
     form_class = UserSignUpForm
@@ -44,6 +45,12 @@ class ProfileView(LoginRequiredMixin, UpdateView):        # mixin для иск�
     # при регистрации нескольких админов исключает возможность редактирования чужого профиля
     def get_object(self, queryset=None):
         return self.request.user
+
+
+class RegisterUser(CreateView):
+    form_class = RegisterUserForm
+    template_name = 'registration/register.html'
+    success_url = reverse_lazy('index')
 
 
 """

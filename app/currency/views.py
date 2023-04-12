@@ -1,5 +1,5 @@
 from currency.models import Rate, ContactUs, Source, RequestResponseLog
-from currency.forms import RateForm, SourceForm, ContactUsForm, RegisterUserForm
+from currency.forms import RateForm, SourceForm, ContactUsForm
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
 from django.urls import reverse_lazy
@@ -245,9 +245,3 @@ class ContactUsCreateView(CreateView):
         redirect = super().form_valid(form)
         self._send_mail()
         return redirect
-
-
-class RegisterUser(CreateView):
-    form_class = RegisterUserForm
-    template_name = 'registration/register.html'
-    success_url = reverse_lazy('index')
