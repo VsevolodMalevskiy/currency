@@ -10,6 +10,16 @@ class RateFilter(django_filters.FilterSet):
         fields = ['buy', 'sale']
 
 
+class RateAPIFilter(django_filters.FilterSet):
+
+    class Meta:
+        model = Rate
+        fields = {
+            'buy': ('gt', 'gte', 'lt', 'lte', 'exact'),  # подключение операторов для поиска: >,=>,<,=<,=
+            'sale': ('gt', 'gte', 'lt', 'lte', 'exact'),
+        }
+
+
 class ContactUsFilter(django_filters.FilterSet):
 
     class Meta:

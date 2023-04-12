@@ -219,9 +219,9 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (    # если закомитить, то вход без авторизации через api по токенам
         'rest_framework.permissions.IsAuthenticated',  # 403
     ),
-    # 'DEFAULT_THROTTLE_RATES': {    # ограничение по количеству запросов пользователем
-    #     'currency': '2/min',
-    # }
+    'DEFAULT_THROTTLE_RATES': {    # ограничение по количеству запросов пользователем
+        'currency': '2/min',       # класс прописан в throttlers.py и укзана в views только для RateViewSet
+    }
 }
 
 SIMPLE_JWT = {
