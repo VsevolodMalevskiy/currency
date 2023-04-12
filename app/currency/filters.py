@@ -34,6 +34,16 @@ class SourceFilter(django_filters.FilterSet):
         fields = ['name', ]
 
 
+class SourceAPIFilter(django_filters.FilterSet):
+
+    class Meta:
+        model = Source
+        fields = {
+            'name': ('iendswith', 'istartswith', 'iexact', 'icontains'),
+            'code_name': ('iendswith', 'istartswith', 'iexact', 'icontains'),
+        }
+
+
 class RequestResponseLogFilter(django_filters.FilterSet):
 
     class Meta:

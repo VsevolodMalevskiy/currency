@@ -10,13 +10,27 @@ from rest_framework_yaml.renderers import YAMLRenderer
 
 from django_filters import rest_framework as filters
 from rest_framework import filters as rest_framework_filters
-from currency.filters import RateAPIFilter
+from currency.filters import RateAPIFilter, SourceAPIFilter
 
-from currency.api.serializers import RateSerializer
-from currency.models import Rate
+from currency.api.serializers import RateSerializer, SourceSerializer
+from currency.models import Rate, Source
 
-from currency.paginators import RatesPagination
+from currency.paginators import RatesPagination, SourcesPagination
 from currency.throttlers import AnonCurrencyThrottle
+
+
+class SourceViewSet(viewsets.ModelViewSet):
+    queryset = Source.objects.all()
+    serializer_class = SourceSerializer
+    renderer_classes = (JSONRenderer, XMLRenderer, YAMLRenderer)
+    pagination_class = SourcesPagination
+    permission_classes = (AllowAny,)
+    filter_backends = (
+        filters.DjangoFilterBackend,
+        rest_framework_filters.OrderingFilter,
+    )
+    filterset_class = SourceAPIFilter
+    ordering_fields = ('name', 'code_name')
 
 
 # class RateApiView(generics.ListCreateAPIView):  # ListCreateAPIView включает в себя create,list
@@ -36,9 +50,8 @@ class RateViewSet(viewsets.ModelViewSet):
     renderer_classes = (JSONRenderer, XMLRenderer, YAMLRenderer)  # в каком формате передача данных: json,xml,yaml
     pagination_class = RatesPagination  # пагинация из класса RatesPagination в фале paginators.py
 
-    # параметр AllowAny прописывается, если класс должен отличаться от параметров параметры прописывается, если класс
-    # должен отличаться от параметров установленных в setting.pyю В данном случае для этого класса не будет требоваться
-    # токен
+    # параметр AllowAny прописывается, если класс должен отличаться от параметров установленных в setting.py.
+    # В данном случае для этого класса не будет требоваться токен
     permission_classes = (AllowAny,)
     filter_backends = (                         # подключение фильтров из существующих
         filters.DjangoFilterBackend,

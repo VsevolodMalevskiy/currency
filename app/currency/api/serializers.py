@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from currency.models import Rate
+from currency.models import Rate, Source
 
 
 class RateSerializer(serializers.ModelSerializer):
@@ -12,4 +12,15 @@ class RateSerializer(serializers.ModelSerializer):
             'sale',
             'created',
             'source',
+        )
+
+
+class SourceSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Source
+        fields = (
+            'id',
+            'source_url',
+            'name',
+            'code_name',
         )
