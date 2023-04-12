@@ -50,6 +50,7 @@ EXTERNAL_APPS = [
     'django_filters',
     'rest_framework',
     'rest_framework_simplejwt',
+    'drf_yasg',   # генератор документации
 ]
 
 INTERNAL_APPS = [
@@ -224,18 +225,18 @@ REST_FRAMEWORK = {
 }
 
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(days=14),
-    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=14),  # период дейстивя Access token
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),  # период дейстивя Refresh token
     'ROTATE_REFRESH_TOKENS': False,
     'BLACKLIST_AFTER_ROTATION': True,
 
-    'ALGORITHM': 'HS256',
+    'ALGORITHM': 'HS256',      # алгоритм шифрования
     'SIGNING_KEY': SECRET_KEY,
     'VERIFYING_KEY': None,
     'AUDIENCE': None,
     'ISSUER': None,
 
-    'AUTH_HEADER_TYPES': ('Bearer', 'JWT',),
+    'AUTH_HEADER_TYPES': ('Bearer', 'JWT',),   # название в запросе перед Refresh token
     'USER_ID_FIELD': 'id',
     'USER_ID_CLAIM': 'user_id',
 

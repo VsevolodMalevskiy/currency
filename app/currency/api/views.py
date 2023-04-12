@@ -11,6 +11,8 @@ from rest_framework_yaml.renderers import YAMLRenderer
 from currency.api.serializers import RateSerializer
 from currency.models import Rate
 
+from currency.paginators import RatesPagination
+
 
 # class RateApiView(generics.ListCreateAPIView):  # ListCreateAPIView включает в себя create,list
 #     queryset = Rate.objects.all().select_related('source')
@@ -27,6 +29,8 @@ class RateViewSet(viewsets.ModelViewSet):
     queryset = Rate.objects.all()
     serializer_class = RateSerializer
     renderer_classes = (JSONRenderer, XMLRenderer, YAMLRenderer)  # в каком формате передача данных: json,xml,yaml
+    pagination_class = RatesPagination  # пагинация из класса RatesPagination в фале paginators.py
+
 
     # создание формы под запрос (не обязательно прописывать - для примера функция).
     # detail=True - создает путь /api/currency/rates/<pk>/buy/.принимает только метод POST по данному запросу.
