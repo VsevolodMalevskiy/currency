@@ -1,4 +1,4 @@
-# from rest_framework import generics
+from rest_framework import generics
 from rest_framework import viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
@@ -10,12 +10,12 @@ from rest_framework_yaml.renderers import YAMLRenderer
 
 from django_filters import rest_framework as filters
 from rest_framework import filters as rest_framework_filters
-from currency.filters import RateAPIFilter, SourceAPIFilter, ContactusAPIFilter
+from currency.filters import RateAPIFilter, SourceAPIFilter, ContactusAPIFilter, RequestResponseLogFilter
 
-from currency.api.serializers import RateSerializer, SourceSerializer, ContactusSerializer
-from currency.models import Rate, Source, ContactUs
+from currency.api.serializers import RateSerializer, SourceSerializer, ContactusSerializer, RequestResponseLogSerializer
+from currency.models import Rate, Source, ContactUs, RequestResponseLog
 
-from currency.paginators import RatesPagination, SourcesPagination, ContactusesPagination
+from currency.paginators import RatesPagination, SourcesPagination, ContactusesPagination, RequestResponseLogPagination
 from currency.throttlers import AnonCurrencyThrottle
 
 
@@ -28,9 +28,11 @@ class SourceViewSet(viewsets.ModelViewSet):
     filter_backends = (
         filters.DjangoFilterBackend,
         rest_framework_filters.OrderingFilter,
+        rest_framework_filters.SearchFilter,
     )
     filterset_class = SourceAPIFilter
     ordering_fields = ('name', 'code_name')
+    search_fields = ['id', 'name', 'code_name']
 
 
 class ContactusViewSet(viewsets.ModelViewSet):
@@ -42,9 +44,27 @@ class ContactusViewSet(viewsets.ModelViewSet):
     filter_backends = (
         filters.DjangoFilterBackend,
         rest_framework_filters.OrderingFilter,
+        rest_framework_filters.SearchFilter,
     )
     filterset_class = ContactusAPIFilter
     ordering_fields = ('id', 'created', 'name', 'subject', 'email')
+    search_fields = ['id', 'created', 'name', 'subject', 'email']
+
+
+class RequestResponseLogApiView(generics.ListAPIView):
+    queryset = RequestResponseLog.objects.all()
+    serializer_class = RequestResponseLogSerializer
+    permission_classes = (AllowAny,)
+    filter_backends = (
+        filters.DjangoFilterBackend,
+        rest_framework_filters.OrderingFilter,
+        rest_framework_filters.SearchFilter,
+    )
+    filterset_class = RequestResponseLogFilter
+    ordering_fields = ('id', 'request_method')
+    search_fields = ['id', 'request_method']
+    renderer_classes = (JSONRenderer, XMLRenderer, YAMLRenderer)
+    pagination_class = RequestResponseLogPagination
 
 
 # class RateApiView(generics.ListCreateAPIView):  # ListCreateAPIView включает в себя create,list
@@ -70,9 +90,11 @@ class RateViewSet(viewsets.ModelViewSet):
     filter_backends = (                         # подключение фильтров из существующих
         filters.DjangoFilterBackend,
         rest_framework_filters.OrderingFilter,  # подключение библиотеки для сортировки
+        rest_framework_filters.SearchFilter,    # подключение библиотеки для search
     )
     filterset_class = RateAPIFilter
     ordering_fields = ('id', 'created', 'buy', 'sale', 'source')  # поля, по каким при желании возможна сортировка
+    search_fields = ['id', 'created', 'buy', 'sale', 'source__name']  # поля для search
     throttle_classes = (AnonCurrencyThrottle,)  # ограничение по количеству запросов в период времени
 
     # создание формы под запрос (не обязательно прописывать - для примера функция).

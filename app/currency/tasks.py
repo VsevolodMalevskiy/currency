@@ -154,13 +154,14 @@ def parse_privatbank():
 #  4 - 16 sec
 #  5 - error
 #  '''
-@shared_task
+
+@shared_task   # для worker
 def send_mail(subject, message):
     recipient = 'support@rambler.ru'
     sender = 'User@gmail.com'
     from django.core.mail import send_mail
-    from time import sleep
-    sleep(10)
+    # from time import sleep    # для worker
+    # sleep(10)                 # для worker
     send_mail(
         subject,
         message,
