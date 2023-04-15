@@ -227,6 +227,7 @@ class ContactUsCreateView(CreateView):
             Body: {self.object.message}
         '''
         from currency.tasks import send_mail
+        # send_mail(subject, message)  # отправка email без worker. убрать в tasks.py @shared_task
         send_mail.delay(subject, message)  # delay - передача worker
         # send_mail.apply_async(args=[subject, message]) # алтернатива верхему методу
         '''
