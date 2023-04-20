@@ -1,0 +1,57 @@
+[
+  {
+    "model": "currency.source",
+    "pk": 4,
+    "fields": {
+      "source_url": "",
+      "name": "CreditdneprBank",
+      "code_name": "creditdneprbank",
+      "phone": null,
+      "logo": ""
+    }
+  },
+  {
+    "model": "currency.source",
+    "pk": 6,
+    "fields": {
+      "source_url": "",
+      "name": "MonoBank",
+      "code_name": "monobank",
+      "phone": null,
+      "logo": ""
+    }
+  },
+  {
+    "model": "currency.source",
+    "pk": 7,
+    "fields": {
+      "source_url": "",
+      "name": "1",
+      "code_name": "1",
+      "phone": null,
+      "logo": ""
+    }
+  },
+  {
+    "model": "currency.source",
+    "pk": 8,
+    "fields": {
+      "source_url": "http://127.0.0.1:8000/currency/source/create/",
+      "name": "IBank",
+      "code_name": "",
+      "phone": null,
+      "logo": ""
+    }
+  },
+  {
+    "model": "currency.source",
+    "pk": 9,
+    "fields": {
+      "source_url": "http://127.0.0.1:8000/api/currency/sources/",
+      "name": "IdeaBank",
+      "code_name": "ideabank",
+      "phone": null,
+      "logo": ""
+    }
+  }
+]

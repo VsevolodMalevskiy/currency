@@ -19,6 +19,7 @@ def test_sign_up(client):
     response = client.get('/account/signup/')
     assert response.status_code == 200
 
+
 """
 . - Success
 F - Failed - ошибка в тесте

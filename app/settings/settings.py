@@ -221,7 +221,8 @@ REST_FRAMEWORK = {
     ),
     'DEFAULT_THROTTLE_RATES': {    # ограничение по количеству запросов пользователем
         'currency': '2/min',       # класс прописан в throttlers.py и укзана в views только для RateViewSet
-    }
+    },
+    'TEST_REQUEST_DEFAULT_FORMAT': 'json',  # настройка для Pytests, т.е. в запросах будут только json
 }
 
 SIMPLE_JWT = {
