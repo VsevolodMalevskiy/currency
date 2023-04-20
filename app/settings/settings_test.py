@@ -1,4 +1,4 @@
-from settings.settings import *  # импорт всех настроек из основного модуля
+from .settings import *
 
 DEBUG = False
-CELERY_TASK_ALWAYS_EAGER = True
+# CELERY_TASK_ALWAYS_EAGER = True
