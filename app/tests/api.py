@@ -6,7 +6,6 @@
 #     response = client.get('/api/currency/rates/')
 def test_get_api_rate_list(api_client):
     response = api_client.get('/api/currency/rates/')
-    breakpoint()
     assert response.status_code == 200
 
 
