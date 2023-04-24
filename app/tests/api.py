@@ -9,7 +9,7 @@ def test_get_api_rate_list(api_client):
     assert response.status_code == 200
 
 
-def test_pots_api_rate_list(api_client):
+def test_post_api_rate_list(api_client):
     response = api_client.post('/api/currency/rates/')
     assert response.status_code == 400
     assert response.json() == {
