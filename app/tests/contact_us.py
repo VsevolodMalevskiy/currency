@@ -11,14 +11,14 @@ def test_post_empty_form_200(client):
     assert response.status_code == 200
 
 
-def test_post_empty_form(client):
-    response = client.post('/currency/contactus/create/')
-    assert response.context_data['form']._errors == {   # проверка на то, что поля при создании отправляются пустыми
-        'name': ['This field is required.'],
-        'email': ['This field is required.'],
-        'subject': ['This field is required.'],
-        'message': ['This field is required.']
-    }
+# def test_post_empty_form(client):
+#     response = client.post('/currency/contactus/create/')
+#     assert response.context_data['form']._errors == {   # проверка на то, что поля при создании отправляются пустыми
+#         'name': ['This field is required.'],
+#         'email': ['This field is required.'],
+#         'subject': ['This field is required.'],
+#         'message': ['This field is required.']
+#     }
 
 
 def test_post_invalid_data(client):

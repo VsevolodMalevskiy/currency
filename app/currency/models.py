@@ -62,6 +62,7 @@ class Source(models.Model):
         return self.name
 
     class Meta:
+        ordering = ('-id',)  # сортировка по ID, запросил выполнить test_get_api_rate_list, иначе проблема с пагинацией
         verbose_name_plural = 'Source'   # наименование базы в панели Admin
 
 
