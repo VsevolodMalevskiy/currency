@@ -15,7 +15,7 @@ def test_post_api_rate_list(api_client):
     assert response.json() == {
             'buy': ['This field is required.'],
             'sale': ['This field is required.'],
-            'source': ['This field is required.']
+            'source': ['This field is required.'],
         }
 
 

@@ -211,6 +211,14 @@ CELERY_BEAT_SCHEDULE = {
     }
 }
 
+# Для работы с кэшированием Memcached
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.memcached.PyMemcacheCache",
+        "LOCATION": "127.0.0.1:11211",  # при выгрузке на внешнем сервере параметры изменить
+    }
+}
+
 #  Авторизация через API с помощью токенов
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
@@ -220,7 +228,7 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticated',  # 403
     ),
     'DEFAULT_THROTTLE_RATES': {    # ограничение по количеству запросов пользователем
-        'currency': '2/min',       # класс прописан в throttlers.py и укзана в views только для RateViewSet
+        'currency': '20/min',       # класс прописан в throttlers.py и укзана в views только для RateViewSet
     },
     'TEST_REQUEST_DEFAULT_FORMAT': 'json',  # настройка для Pytests, т.е. в запросах будут только json
 }

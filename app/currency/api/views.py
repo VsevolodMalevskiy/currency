@@ -1,3 +1,4 @@
+from django.core.cache import cache
 from rest_framework import generics
 from rest_framework import viewsets
 from rest_framework.decorators import action
@@ -17,6 +18,8 @@ from currency.models import Rate, Source, ContactUs, RequestResponseLog
 
 from currency.paginators import RatesPagination, SourcesPagination, ContactusesPagination, RequestResponseLogPagination
 from currency.throttlers import AnonCurrencyThrottle
+
+from app.currency.choices import RateCurrencyChoices
 
 
 class SourceViewSet(viewsets.ModelViewSet):
@@ -81,7 +84,8 @@ class RequestResponseLogApiView(generics.ListAPIView):
 class RateViewSet(viewsets.ModelViewSet):
     queryset = Rate.objects.all()
     serializer_class = RateSerializer
-    renderer_classes = (JSONRenderer, XMLRenderer, YAMLRenderer)  # в каком формате передача данных: json,xml,yaml
+    # закомитил для проверки def latest кэширование
+    # renderer_classes = (JSONRenderer, XMLRenderer, YAMLRenderer)  # в каком формате передача данных: json,xml,yaml
     pagination_class = RatesPagination  # пагинация из класса RatesPagination в фале paginators.py
 
     # параметр AllowAny прописывается, если класс должен отличаться от параметров установленных в setting.py.
@@ -106,3 +110,21 @@ class RateViewSet(viewsets.ModelViewSet):
         # print(rate)  # send buy request
         sz = self.get_serializer(instance=rate)
         return Response(sz.data)
+
+    # для кеширования повторных запросов
+    @action(detail=False, methods=('GET',))
+    def latest(self, request, *args, **kwargs):
+        latest_rates = []
+        key = 'API::currency::rates::latest'
+        cached_rates = cache.get(key)
+        if cached_rates:
+            return Response(cached_rates)
+
+        for source_obj in Source.objects.all():
+            for currency in RateCurrencyChoices:
+                latest = Rate.objects.filter(source=source_obj, currency=currency).order_by('-created').first()
+                if latest:
+                    latest_rates.append(RateSerializer(instance=latest).data)
+
+        cache.set(key, latest_rates, 60 * 60 * 24)
+        return Response(latest_rates)
