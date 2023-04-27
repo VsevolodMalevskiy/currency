@@ -20,6 +20,7 @@ from currency.paginators import RatesPagination, SourcesPagination, ContactusesP
 from currency.throttlers import AnonCurrencyThrottle
 
 from app.currency.choices import RateCurrencyChoices
+from currency import constants
 
 
 class SourceViewSet(viewsets.ModelViewSet):
@@ -115,8 +116,12 @@ class RateViewSet(viewsets.ModelViewSet):
     @action(detail=False, methods=('GET',))
     def latest(self, request, *args, **kwargs):
         latest_rates = []
-        key = 'API::currency::rates::latest'
-        cached_rates = cache.get(key)
+        # key = 'API::currency::rates::latest'  # перенесено в constants.py
+        # вызов как constants.LATEST_RATE_CACHE для визуализации, что это именно константа
+        cached_rates = cache.get(constants.LATEST_RATE_CACHE)
+
+        # удаление кэша при обновлении БД организовано в сигналах в файле receivers.py
+        # Для работы кэширования необходимо запустить фалй memcached.exe на диске
         if cached_rates:
             return Response(cached_rates)
 
@@ -126,5 +131,5 @@ class RateViewSet(viewsets.ModelViewSet):
                 if latest:
                     latest_rates.append(RateSerializer(instance=latest).data)
 
-        cache.set(key, latest_rates, 60 * 60 * 24)
+        cache.set(constants.LATEST_RATE_CACHE, latest_rates, 60 * 60 * 24)  # сутки
         return Response(latest_rates)
