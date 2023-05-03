@@ -3,6 +3,15 @@ from time import sleep, time
 # словарь для хранения кэша (ускорение вывода повторных запросов)
 CACHE = {}
 
+'''
+LEGB
+L - local
+E - enclosure
+G - global
+B - builtins (len, print, int, bool)
+__hash__
+'''
+
 
 def cache_func(function):
     def wrapper(*args, **kwargs):
