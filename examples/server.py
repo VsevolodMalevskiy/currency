@@ -1,7 +1,16 @@
 # Gunicorn под Win не работает
+# https://gunicorn.org
 # Для запуска кода:
 # cd examples
 # gunicorn -w 4 server:app, где 4 - количество потоков, server - имя файла
+# или возможен запуск через внутренний wsgi-,  а не runserver, но runserver запускает только один worker
+# cd ..
+# cd app
+# gunicorn -w 4 settings.wsgi
+# для запуска 4 процессов и 4 потоков в каждом:
+# gunicorn --workers 4 --threads 4 settings.wsgi
+# если необходимо через время убивать неиспользованный процесс (по умолчанию 30 секунд):
+# gunicorn --workers 4 --threads 4 settings.wsgi --timeout 10
 
 def hello():
     return b'Hello'
