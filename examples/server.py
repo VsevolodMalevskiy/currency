@@ -11,6 +11,10 @@
 # gunicorn --workers 4 --threads 4 settings.wsgi
 # если необходимо через время убивать неиспользованный процесс (по умолчанию 30 секунд):
 # gunicorn --workers 4 --threads 4 settings.wsgi --timeout 10
+# если необходимо ограничить количество запросов (по умолчанию 1 запрос):
+# gunicorn --workers 4 --threads 4 settings.wsgi --timeout 10 --max-requests 2
+# если необходимо отслеживать логи (notset, debug, info, warning, error, critical - уровни логов (debug - все логи):
+# gunicorn --workers 4 --threads 4 settings.wsgi --timeout 10 --log-level debug
 
 def hello():
     return b'Hello'
