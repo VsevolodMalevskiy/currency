@@ -20,8 +20,16 @@ urlpatterns = {
 def app(environ, start_response):  # environ выполняет функцию общения между сервером и кодом, это словарь
     path = environ['RAW_URI']
     view_func = urlpatterns.get(path)  # получаем введенный путь
-    data = view_func()
 
+    if not view_func:  # если путь не введен, а введен  http://127.0.0.1:8000/
+        data = b'Not Found'
+        start_response("404 Not Found", [
+            ("Content-Type", "text/plain"),
+            ("Content-Length", str(len(data)))
+        ])
+        return iter([data])
+
+    data = view_func()
     # data = b"Hello, World!\n"   # вывод сообщений обязательно прописывается в бинарном виде
     start_response("200 OK", [
         ("Content-Type", "text/plain"),
