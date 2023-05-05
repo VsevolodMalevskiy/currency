@@ -26,9 +26,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-tjiwi$+_qta@5*n0g7-87il==lg+d$%&^o7+&pcj6*08zl+&3!'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = True  # Truе - при режиме настройки, при размещении на сервере False. При True все ошибки видны пользователю.
+# Если установлен False, то статика не подтягивается
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['*']  # при '*' любой может зайти. для входа только с этого компьютера вместо '*' - '127.0.0.1'
 
 
 # Application definition
@@ -146,6 +147,9 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']  # размещение статических файлов
+
+# При DEBUG=True  необходимо всю статику собрать в одну дирректорию и выполнить команду python manage.py collectstatic
+STATIC_ROOT = BASE_DIR.parent / 'static_content' / 'static'
 
 MEDIA_URL = 'media/'
 MEDIA_ROOT = BASE_DIR.parent / 'static_content' / 'media'
