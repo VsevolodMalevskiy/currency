@@ -1,0 +1,15 @@
+version: "3.9"
+
+services:
+  memcached:
+    image: memcached:1.6.9
+    container_name: memcached
+    ports:
+      - "11211:11211"
+
+  rabbitmq:
+    image: rabbitmq:3.9-management  # nолько с версией managment
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
