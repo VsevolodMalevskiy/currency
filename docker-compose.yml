@@ -22,8 +22,8 @@ services:
     env_file: .env
     ports:
       - "5432:5432"
-    volumes:
-      - db_data:/var/lib/postgresql/data
+    volumes:  # для того, чтобы после установки контейнеров база данных не удалялась
+      - db_data:/var/lib/postgresql/data  # место хранения БД при остановленных контенерах
 
 volumes:
   db_data: {}
