@@ -9,11 +9,13 @@ https://docs.djangoproject.com/en/4.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
+import os
 from datetime import timedelta
 from pathlib import Path
 
 from celery.schedules import crontab
 from django.urls import reverse_lazy
+from environ import environ
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -26,7 +28,18 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-tjiwi$+_qta@5*n0g7-87il==lg+d$%&^o7+&pcj6*08zl+&3!'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True  # Truе - при режиме настройки, при размещении на сервере False. При True все ошибки видны пользователю.
+
+
+env = environ.Env(
+    # set casting, default value
+    DEBUG=(bool, False),  # если в .env DEBUG не задан, то он False
+)
+
+environ.Env.read_env(os.path.join(BASE_DIR.parent, '.env'))  # parent - на директорию выше (не в app .env, а в currency)
+
+DEBUG = env('DEBUG')  # для задания True или False через файл .env
+
+# DEBUG = True  # Truе - при режиме настройки, при размещении на сервере False. При True все ошибки видны пользователю.
 # Если установлен False, то статика не подтягивается
 
 ALLOWED_HOSTS = ['*']  # при '*' любой может зайти. для входа только с этого компьютера вместо '*' - '127.0.0.1'
@@ -103,10 +116,23 @@ WSGI_APPLICATION = 'settings.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
+# использование базы данных sqlite
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
+# использование базы данных Postgres
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': env.str('POSTGRES_DB', 'currency-db'),
+        'USER': env.str('POSTGRES_USER', ''),
+        'PASSWORD': env.str('POSTGRES_PASSWORD', ''),
+        'HOST': env.str('POSTGRES_HOST', 'localhost'),
+        'PORT': env.str('POSTGRES_PORT', '5432'),
     }
 }
 
@@ -190,7 +216,16 @@ HTTP_SCHEMA = 'http'
 
 # CELERY_BROKER_URL = "redis://localhost:6379"
 
-CELERY_BROKER_URL = 'amqp://localhost'
+# при работе без файла ,env
+# CELERY_BROKER_URL = 'amqp://localhost'
+
+# при работе с файлом .env
+CELERY_BROKER_URL = 'amqp://{0}:{1}@{2}:{3}//'.format(
+    env.str('RABBITMQ_DEFAULT_USER', 'guest'),
+    env.str('RABBITMQ_DEFAULT_PASS', 'guest'),
+    env.str('RABBITMQ_DEFAULT_HOST', '127.0.0.1'),
+    env.str('RABBITMQ_DEFAULT_PORT', '5672')
+)
 
 # '''
 # протокол общения с брокером:  amqp,
