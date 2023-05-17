@@ -251,10 +251,18 @@ CELERY_BEAT_SCHEDULE = {
 }
 
 # Для работы с кэшированием Memcached
+# CACHES = {
+#     "default": {
+#         "BACKEND": "django.core.cache.backends.memcached.PyMemcacheCache",
+#         "LOCATION": "127.0.0.1:11211",  # при выгрузке на внешнем сервере параметры изменить
+#     }
+# }
+
+# Для работы через образ
 CACHES = {
     "default": {
         "BACKEND": "django.core.cache.backends.memcached.PyMemcacheCache",
-        "LOCATION": "127.0.0.1:11211",  # при выгрузке на внешнем сервере параметры изменить
+        "LOCATION": f"{env.str('CACHE_DEFAULT_HOST', '127.0.0.1')}:{env.str('CACHE_DEFAULT_PORT', '127.0.0.1')}",
     }
 }
 

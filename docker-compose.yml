@@ -1,7 +1,10 @@
 version: "3.9"
 
+# python ./app/manage.py runserver 0.0.0.0:8000
+
 services:
   backend:
+    command: python ./app/manage.py runserver
     image: local
     build: .  # поиск образа не из docker-образов на сайте, а из Dockerfile
     container_name: backend
@@ -21,8 +24,18 @@ services:
     container_name: celery
     stdin_open: true
     tty: true
-    ports:
-      - "8000:8000"
+    depends_on:
+      - postgres
+      - rabbitmq
+      - memcached
+
+  celerybeat:
+    command: celery -A settings beat -l info
+    image: local
+    build: .
+    container_name: celerybeat
+    stdin_open: true
+    tty: true
     depends_on:
       - postgres
       - rabbitmq
