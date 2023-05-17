@@ -1,6 +1,15 @@
 version: "3.9"
 
 services:
+  backend:
+    image: local
+    build: .  # поиск образа не из docker-образов на сайте, а из Dockerfile
+    container_name: backend
+    stdin_open: true  # для возможности взаимодействия с консолью контейнера
+    tty: true  # для возможности взаимодействия с консолью контейнера
+    ports:
+      - "8000:8000"
+
   memcached:
     image: memcached:1.6.9
     container_name: memcached
