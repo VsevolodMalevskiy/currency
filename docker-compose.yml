@@ -8,7 +8,25 @@ services:
     stdin_open: true  # для возможности взаимодействия с консолью контейнера
     tty: true  # для возможности взаимодействия с консолью контейнера
     ports:
+      - "8000:8000"  # связь вне контейнера по порту 8000 (для работы в браузере)
+    depends_on:
+      - postgres
+      - rabbitmq
+      - memcached
+
+  celery:
+    command: celery -A settings worker -l info -c 4
+    image: local
+    build: .
+    container_name: celery
+    stdin_open: true
+    tty: true
+    ports:
       - "8000:8000"
+    depends_on:
+      - postgres
+      - rabbitmq
+      - memcached
 
   memcached:
     image: memcached:1.6.9
