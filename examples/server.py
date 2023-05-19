@@ -25,7 +25,7 @@ def world():
 
 
 urlpatterns = {
-    '/hello/': hello, # пути /hello/ соответствует функция hello
+    '/hello/': hello,  # пути /hello/ соответствует функция hello
     '/world/': world
 }
 

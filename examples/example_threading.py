@@ -1,9 +1,9 @@
-
-from time import sleep, time
-import threading
-from multiprocessing import Process, Pool, Queue
-
-import requests
+#
+# from time import sleep, time
+# import threading
+# from multiprocessing import Process, Pool, Queue
+#
+# import requests
 
 # def slow(n):
 #     sleep(n)
@@ -73,11 +73,11 @@ import requests
 #
 #
 # print(f'Execution: {time() - start}')
-
-'''
-GIL - Global Interpreter Lock
-'''
-
+#
+# '''
+# GIL - Global Interpreter Lock
+# '''
+#
 
 # def countdown(n):
 #     while n:

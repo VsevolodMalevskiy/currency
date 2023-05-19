@@ -16,7 +16,7 @@ __hash__
 def cache_func(function):
     def wrapper(*args, **kwargs):
         key = f'{function.__name__}::{args}::{kwargs}'  # создание ключа
-        print(key)
+        # print(key)
 
         if key in CACHE:
             return CACHE[key]  # проврка был ли ранее подобный запрос
@@ -42,11 +42,11 @@ def foo():
 
 
 start = time()
-print(add(12, 3))
-print(add(12, 3))
-print(foo())
-print(foo())
-
-
-print(CACHE)
-print(f'time: {time()-start}')
+# print(add(12, 3))
+# print(add(12, 3))
+# print(foo())
+# print(foo())
+#
+#
+# print(CACHE)
+# print(f'time: {time()-start}')
