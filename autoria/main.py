@@ -124,7 +124,7 @@ def main():
         DBWriter('cars_info')
     )
 
-    page = 2500
+    page = 2400
 
     while True:
 
