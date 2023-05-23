@@ -8,8 +8,8 @@ from bs4 import BeautifulSoup
 import sqlite3 as sq
 
 directory = (
-    'car_id', 'data_link_to_view', 'car_brand_model_year', 'car_motor', 'car_color',
-    'car_check', 'car_last_operation', 'car_wanted'
+    'car_id', 'data_link_to_view', 'car_price', 'salesman_name', 'car_mileage', 'car_brand_model_year',
+    'car_motor', 'car_color', 'car_check', 'car_last_operation', 'car_wanted'
 )
 
 
@@ -41,7 +41,7 @@ def get_detail_content(link: str) -> str:
     return response.text
 
 
-def create_car_list(car_id: str, link: str, dictionary: list) -> list:
+def create_car_list(car_id: str, link: str, price: int, name: str, mileage: int, dictionary: list) -> list:
     car_directory = (
         'car_brand_model_year', 'car_motor', 'car_color', 'car_check', 'car_last_operation', 'car_wanted'
     )
@@ -55,8 +55,8 @@ def create_car_list(car_id: str, link: str, dictionary: list) -> list:
     car_last_operation = car_inform.get('car_last_operation')
     car_wanted = car_inform.get('car_wanted')
 
-    cars_data = [car_id, link, car_brand_model_year, car_motor, car_color, car_check, car_last_operation,
-                 car_wanted]
+    cars_data = [car_id, link, price, name, mileage, car_brand_model_year, car_motor, car_color,
+                 car_check, car_last_operation, car_wanted]
     return cars_data
 
 
@@ -76,7 +76,6 @@ class CSVWriter:
 
 
 class StdOutWriter:
-
     def write(self, row: list):
         print(row) # noqa
 
@@ -92,7 +91,10 @@ class DBWriter:
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 car_id INTEGER,
                 data_link_to_view NVARCHAR(80),
-                car_brand_model_year NVARCHAR(80),            
+                car_price INTEGER,
+                salesman_name NVARCHAR(80),
+                car_mileage INTEGER,
+                car_brand_model_year NVARCHAR(80),
                 car_motor NVARCHAR(40),
                 car_color NVARCHAR(20),
                 car_check NVARCHAR(20),
@@ -104,9 +106,9 @@ class DBWriter:
     def write(self, row: list):
         connection = sq.connect(self.db_name)
         cur = connection.cursor()
-        insert_data = """INSERT INTO cars(car_id, data_link_to_view, car_brand_model_year, car_motor, 
-                          car_color, car_check, car_last_operation, car_wanted)
-                          VALUES (?, ?, ?, ?, ?, ?, ?, ?);"""
+        insert_data = """INSERT INTO cars(car_id, data_link_to_view, car_price, salesman_name, car_mileage,
+                          car_brand_model_year, car_motor, car_color, car_check, car_last_operation, car_wanted)
+                          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);"""
 
         cur.execute(insert_data, row)
         connection.commit()
@@ -149,17 +151,28 @@ def main():
 
             soup_detail = BeautifulSoup(main_text, features="html.parser")
             search = soup_detail.find("div", {"class": "technical-info ticket-checked"})
+            car_parameters = list()
             try:
                 search_info = search.findAll("span", {"class": "argument"})
                 # search_info1 = search.findAll("span", {"class": "label"})  # наименования параметров
+                for item in search_info:
+                    car_parameters.append(item.text)
             except AttributeError:
                 pass # noqa
 
-            car_parameters = list()
-            for item in search_info:
-                car_parameters.append(item.text)
+            search_detail = soup_detail.find("div", {"class": "auto-wrap"})
+            search_price = search_detail.find("div", {"class": "price_value"})
+            search_name = search_detail.find("div", {"class": "seller_info_name bold"})
+            search_mileage = search_detail.find("span", {"class": "size18"})
 
-            cars_data = create_car_list(car_id, data_link_to_view, car_parameters)
+            price = ''.join(x for x in search_price.text if x.isdigit())
+            if search_name:
+                name = search_name.text
+            else:
+                name = None
+            mileage = search_mileage.text
+
+            cars_data = create_car_list(car_id, data_link_to_view, price, name, mileage, car_parameters)
 
             for writer in writers:
                 writer.write(cars_data)
